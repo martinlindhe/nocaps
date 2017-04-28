@@ -1,6 +1,10 @@
 package nocaps
 
-import "fmt"
+import (
+	"fmt"
+
+	"golang.org/x/sys/windows/registry"
+)
 
 func Perform() error {
 	path := `SYSTEM\CurrentControlSet\Control\Keyboard Layout`
@@ -24,4 +28,5 @@ func Perform() error {
 
 	fmt.Println("Updated registry at", path+`\`+keyName)
 	fmt.Println("You need to reboot for the settings to take effect")
+	return nil
 }
