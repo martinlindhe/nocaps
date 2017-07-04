@@ -13,10 +13,13 @@ import (
 
 func Perform() error {
 
-	content := `#!/bin/sh
-
-# added by nocaps - for KDE
-setxkbmap -option caps:none
+	content := `[Desktop Entry]
+Type=Application
+Name=nocaps
+Comment=github.com/martinlindhe/nocaps
+Exec=/usr/bin/setxkbmap -option caps:none
+Terminal=false
+NoDisplay=true
 `
 
 	usr, err := user.Current()
@@ -24,18 +27,17 @@ setxkbmap -option caps:none
 		return err
 	}
 
-	fileName := filepath.Join(usr.HomeDir, ".config/autostart-scripts/nocaps.sh")
+	fileName := filepath.Join(usr.HomeDir, ".config/autostart/nocaps.desktop")
 	parent := filepath.Dir(fileName)
 	err = os.MkdirAll(parent, 0755)
 	if err != nil {
 		return err
 	}
-
 	err = ioutil.WriteFile(fileName, []byte(content), 0755)
 	if err != nil {
 		return err
 	}
-	fmt.Println("Generated", fileName, "which will be run each start-up (KDE)")
+	fmt.Println("Generated", fileName, "which will be run each start-up")
 
-	return runInteractiveCommand("sh", fileName)
+	return runInteractiveCommand("setxkbmap", "-option", "caps:none")
 }

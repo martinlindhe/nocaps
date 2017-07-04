@@ -2,7 +2,7 @@
 
 configures the OS to disable caps lock
 
-currently only supporting Windows
+currently supports Windows and Linux
 
 
 ## Installation
