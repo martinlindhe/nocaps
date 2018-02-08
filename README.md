@@ -17,6 +17,14 @@ currently supports Windows and Linux
 Reboot, done
 
 
+## Revert changes
+As Administrator:
+
+    nocaps --revert
+
+Reboot, done
+
+
 ## License
 
 Under [MIT](LICENSE)

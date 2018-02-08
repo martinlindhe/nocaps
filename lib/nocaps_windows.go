@@ -6,10 +6,24 @@ import (
 	"golang.org/x/sys/windows/registry"
 )
 
-func Perform() error {
-	path := `SYSTEM\CurrentControlSet\Control\Keyboard Layout`
-	keyName := `Scancode Map`
-	newK, _, err := registry.CreateKey(registry.LOCAL_MACHINE, path, registry.SET_VALUE)
+var (
+	keyPath = `SYSTEM\CurrentControlSet\Control\Keyboard Layout`
+	keyName = `Scancode Map`
+)
+
+func EnableCaps() error {
+	key, err := registry.OpenKey(registry.LOCAL_MACHINE, keyPath, registry.WRITE)
+	if err != nil {
+		return err
+	}
+	err = key.DeleteValue(keyName)
+	fmt.Println("Deleted registry at", keyPath+`\`+keyName)
+	fmt.Println("You need to reboot for the settings to take effect")
+	return err
+}
+
+func DisableCaps() error {
+	newK, _, err := registry.CreateKey(registry.LOCAL_MACHINE, keyPath, registry.SET_VALUE)
 	defer newK.Close()
 	if err != nil {
 		return err
@@ -26,7 +40,7 @@ func Perform() error {
 		return err
 	}
 
-	fmt.Println("Updated registry at", path+`\`+keyName)
+	fmt.Println("Updated registry at", keyPath+`\`+keyName)
 	fmt.Println("You need to reboot for the settings to take effect")
 	return nil
 }

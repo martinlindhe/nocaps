@@ -11,7 +11,11 @@ import (
 	"path/filepath"
 )
 
-func Perform() error {
+func EnableCaps() error {
+	panic("TODO impl EnableCaps on linux")
+}
+
+func DisableCaps() error {
 
 	content := `[Desktop Entry]
 Type=Application
